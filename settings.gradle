@@ -1,0 +1,9 @@
+rootProject.name = 'reacon'
+include 'reacon-api'
+include 'reacon-common'
+include 'reacon-repository'
+include 'reason-core'
+include 'reacon-repository'
+include 'reason-core'
+include 'reacon-domain'
+
