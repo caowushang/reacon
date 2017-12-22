@@ -13,10 +13,15 @@ ext {
 buildscript {
     ext {
         springBootVersion = '1.5.9.RELEASE'
+        nexusUrl = 'http://maven.aliyun.com/nexus/content/groups/public'
     }
     repositories {
-        mavenCentral()
-        maven { url "http://repo.spring.io/release" }
+        maven {
+            name "aliyun maven"
+            url "$nexusUrl"
+        }
+        mavenLocal()
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
@@ -38,8 +43,11 @@ subprojects {
         options.encoding = "UTF-8"
     }
     repositories {
-        mavenCentral()
-        maven { url "http://repo.spring.io/release" }
+        maven {
+            name "aliyun maven"
+            url "$nexusUrl"
+        }
+        mavenLocal()
         jcenter()
     }
     sourceSets {
@@ -76,13 +84,13 @@ project(":reacon-api") {
 
 project(":reacon-common") {
     dependencies {
-        //compile project(":reacon-core")
+
     }
 }
 
 project(":reacon-repository") {
     dependencies {
-        //compile project(":reacon-core")
+
         compile "org.mybatis:mybatis:$mybatisVersion"
         compile "org.mybatis:mybatis-spring:$mybatisSpringVersion"
     }
@@ -91,6 +99,7 @@ project(":reacon-repository") {
 project(":reacon-core") {
     dependencies {
         compile project(":reacon-common")
-        //compile project(":reacon-core")
+
     }
 }
+
