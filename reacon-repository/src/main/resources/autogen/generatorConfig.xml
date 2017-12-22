@@ -4,43 +4,52 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 
+    <context id="DB2Tables" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!--<plugin type="com.hupu.smart.common.mybatis.generate.ExampleSerializablePlugin"/>-->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
 
 
-    <commentGenerator>
-        <property name="suppressAllComments" value="true"/>
-    </commentGenerator>
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
 
-    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                    connectionURL="jdbc:mysql://${jdbc.url}/xhxreacon?zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8"
-                    userId="${jdbc.username}"
-                    password="${jdbc.password}">
-    </jdbcConnection>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/xhxreacon?zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8"
+                        userId="root"
+                        password="0000">
+        </jdbcConnection>
 
-    <javaTypeResolver>
-        <property name="forceBigDecimals" value="false"/>
-    </javaTypeResolver>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
 
-    <!-- generate Model -->
-    <javaModelGenerator targetPackage="${package.model}"
-                        targetProject="${project.model}">
-        <property name="enableSubPackages" value="true"/>
-        <property name="trimStrings" value="true"/>
-    </javaModelGenerator>
+        <!-- generate Model -->
+        <javaModelGenerator targetPackage="com.xhx.reacon.domain.model"
+                            targetProject="../reacon-domain/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
 
-    <!-- generate xml -->
-    <sqlMapGenerator targetPackage="${package.xml}"
-                     targetProject="${project.xml}">
-        <property name="enableSubPackages" value="true"/>
-    </sqlMapGenerator>
+        <!-- generate xml -->
+        <sqlMapGenerator targetPackage="base.com.xhx.reacon.repository.mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
 
-    <!-- generate Mapper -->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="${package.mapper}"
-                         targetProject="${project.mapper}">
-        <property name="enableSubPackages" value="true"/>
-    </javaClientGenerator>
+        <!-- generate Mapper -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.xhx.reacon.repository.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
 
-    <table tableName="%">
-        <generatedKey column="id" sqlStatement="Mysql"/>
-    </table>
-
+        <table tableName="%">
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+    </context>
 </generatorConfiguration>
