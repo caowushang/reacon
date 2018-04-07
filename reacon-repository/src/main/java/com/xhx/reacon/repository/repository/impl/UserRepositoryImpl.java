@@ -35,6 +35,7 @@ public class UserRepositoryImpl implements UserRepository{
         Date nowDate = new Date();
         record.setCreateTime(nowDate);
         record.setUpdateTime(nowDate);
-        return userMapper.insert(record);
+        userMapper.insertSelective(record);
+        return record.getId();
     }
 }
