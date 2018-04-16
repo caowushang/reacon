@@ -20,7 +20,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/xhxreacon?zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8"
+                        connectionURL="jdbc:mysql://localhost:3306/raccoon?zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8"
                         userId="root"
                         password="0000">
         </jdbcConnection>

@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xhx.reacon.repository.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.xhx.reacon.domain.model.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="info" jdbcType="VARCHAR" property="info" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="create_at" jdbcType="DATE" property="createAt" />
+    <result column="update_at" jdbcType="DATE" property="updateAt" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, info, create_time, update_time, is_delete
+    id, name, password, info, create_at, update_at
   </sql>
   <select id="selectByExample" parameterType="com.xhx.reacon.domain.model.UserExample" resultMap="BaseResultMap">
     select
@@ -84,15 +84,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.xhx.reacon.domain.model.UserExample">
     delete from user
@@ -101,16 +101,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xhx.reacon.domain.model.User">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (name, info, create_time, 
-      update_time, is_delete)
-    values (#{name,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=BIT})
+    insert into user (name, password, info, 
+      create_at, update_at)
+    values (#{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
+      #{createAt,jdbcType=DATE}, #{updateAt,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.xhx.reacon.domain.model.User">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into user
@@ -118,34 +118,34 @@
       <if test="name != null">
         name,
       </if>
+      <if test="password != null">
+        password,
+      </if>
       <if test="info != null">
         info,
       </if>
-      <if test="createTime != null">
-        create_time,
+      <if test="createAt != null">
+        create_at,
       </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="isDelete != null">
-        is_delete,
+      <if test="updateAt != null">
+        update_at,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
       <if test="info != null">
         #{info,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="createAt != null">
+        #{createAt,jdbcType=DATE},
       </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDelete != null">
-        #{isDelete,jdbcType=BIT},
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=DATE},
       </if>
     </trim>
   </insert>
@@ -159,22 +159,22 @@
     update user
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
       <if test="record.info != null">
         info = #{record.info,jdbcType=VARCHAR},
       </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      <if test="record.createAt != null">
+        create_at = #{record.createAt,jdbcType=DATE},
       </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.isDelete != null">
-        is_delete = #{record.isDelete,jdbcType=BIT},
+      <if test="record.updateAt != null">
+        update_at = #{record.updateAt,jdbcType=DATE},
       </if>
     </set>
     <if test="_parameter != null">
@@ -183,12 +183,12 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update user
-    set id = #{record.id,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
       info = #{record.info,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      is_delete = #{record.isDelete,jdbcType=BIT}
+      create_at = #{record.createAt,jdbcType=DATE},
+      update_at = #{record.updateAt,jdbcType=DATE}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -199,29 +199,29 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
       <if test="info != null">
         info = #{info,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=DATE},
       </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDelete != null">
-        is_delete = #{isDelete,jdbcType=BIT},
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=DATE},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xhx.reacon.domain.model.User">
     update user
     set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
       info = #{info,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_delete = #{isDelete,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
+      create_at = #{createAt,jdbcType=DATE},
+      update_at = #{updateAt,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByExampleWithRowbounds" parameterType="com.xhx.reacon.domain.model.UserExample" resultMap="BaseResultMap">
     select

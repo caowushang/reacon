@@ -4,25 +4,25 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class User implements Serializable {
-    private Integer id;
+    private Long id;
 
     private String name;
 
+    private String password;
+
     private String info;
 
-    private Date createTime;
+    private Date createAt;
 
-    private Date updateTime;
-
-    private Boolean isDelete;
+    private Date updateAt;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -34,6 +34,14 @@ public class User implements Serializable {
         this.name = name == null ? null : name.trim();
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
     public String getInfo() {
         return info;
     }
@@ -42,27 +50,19 @@ public class User implements Serializable {
         this.info = info == null ? null : info.trim();
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateAt() {
+        return createAt;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdateAt() {
+        return updateAt;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Boolean getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Boolean isDelete) {
-        this.isDelete = isDelete;
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 }
