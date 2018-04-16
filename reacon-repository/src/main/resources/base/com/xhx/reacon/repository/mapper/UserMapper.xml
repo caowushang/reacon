@@ -8,6 +8,7 @@
     <result column="info" jdbcType="VARCHAR" property="info" />
     <result column="create_at" jdbcType="DATE" property="createAt" />
     <result column="update_at" jdbcType="DATE" property="updateAt" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, password, info, create_at, update_at
+    id, name, password, info, create_at, update_at, is_delete
   </sql>
   <select id="selectByExample" parameterType="com.xhx.reacon.domain.model.UserExample" resultMap="BaseResultMap">
     select
@@ -105,9 +106,9 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into user (name, password, info, 
-      create_at, update_at)
+      create_at, update_at, is_delete)
     values (#{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
-      #{createAt,jdbcType=DATE}, #{updateAt,jdbcType=DATE})
+      #{createAt,jdbcType=DATE}, #{updateAt,jdbcType=DATE}, #{isDelete,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.xhx.reacon.domain.model.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -130,6 +131,9 @@
       <if test="updateAt != null">
         update_at,
       </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
@@ -146,6 +150,9 @@
       </if>
       <if test="updateAt != null">
         #{updateAt,jdbcType=DATE},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -176,6 +183,9 @@
       <if test="record.updateAt != null">
         update_at = #{record.updateAt,jdbcType=DATE},
       </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -188,7 +198,8 @@
       password = #{record.password,jdbcType=VARCHAR},
       info = #{record.info,jdbcType=VARCHAR},
       create_at = #{record.createAt,jdbcType=DATE},
-      update_at = #{record.updateAt,jdbcType=DATE}
+      update_at = #{record.updateAt,jdbcType=DATE},
+      is_delete = #{record.isDelete,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -211,6 +222,9 @@
       <if test="updateAt != null">
         update_at = #{updateAt,jdbcType=DATE},
       </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -220,7 +234,8 @@
       password = #{password,jdbcType=VARCHAR},
       info = #{info,jdbcType=VARCHAR},
       create_at = #{createAt,jdbcType=DATE},
-      update_at = #{updateAt,jdbcType=DATE}
+      update_at = #{updateAt,jdbcType=DATE},
+      is_delete = #{isDelete,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByExampleWithRowbounds" parameterType="com.xhx.reacon.domain.model.UserExample" resultMap="BaseResultMap">

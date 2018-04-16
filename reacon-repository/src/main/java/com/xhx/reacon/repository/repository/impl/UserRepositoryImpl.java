@@ -13,13 +13,13 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private UserMapper userMapper;
 
     @Override
-    public List<User> selectById(List<Integer> idList) {
+    public List<User> selectById(List<Long> idList) {
         if(CollectionUtils.isEmpty(idList)) {
             return Lists.newArrayList();
         }
@@ -31,11 +31,20 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public int insert(User record) {
+    public List<User> selectByName(String name) {
+        UserExample example = new UserExample();
+        example.createCriteria()
+                .andNameEqualTo(name)
+                .andIsDeleteEqualTo(false);
+        return userMapper.selectByExample(example);
+    }
+
+    @Override
+    public Boolean insert(User record) {
         Date nowDate = new Date();
-        record.setCreateTime(nowDate);
-        record.setUpdateTime(nowDate);
+        record.setCreateAt(nowDate);
+        record.setUpdateAt(nowDate);
         userMapper.insertSelective(record);
-        return record.getId();
+        return !record.getId().equals(0L);
     }
 }

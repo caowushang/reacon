@@ -5,7 +5,9 @@ import com.xhx.reacon.domain.model.User;
 import java.util.List;
 
 public interface UserRepository {
-    List<User> selectById(List<Integer> idList);
+    List<User> selectById(List<Long> idList);
 
-    int insert(User user);
+    List<User> selectByName(String name);
+
+    Boolean insert(User user);
 }

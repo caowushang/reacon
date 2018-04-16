@@ -16,6 +16,8 @@ public class User implements Serializable {
 
     private Date updateAt;
 
+    private Boolean isDelete;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -64,5 +66,13 @@ public class User implements Serializable {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public Boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
     }
 }
