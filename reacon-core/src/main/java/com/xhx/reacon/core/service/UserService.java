@@ -1,5 +1,6 @@
 package com.xhx.reacon.core.service;
 
+import com.xhx.reacon.common.base.BaseResponse;
 import com.xhx.reacon.common.request.SignInRequest;
 import com.xhx.reacon.common.request.SignUpRequest;
 import com.xhx.reacon.common.request.QueryUserInfoRequest;
@@ -11,7 +12,7 @@ public interface UserService {
 
     List<User> getUserInfo(QueryUserInfoRequest request);
 
-    Boolean addNewUser(SignUpRequest request);
+    BaseResponse addNewUser(SignUpRequest request);
 
-    Boolean verifyUser(SignInRequest request);
+    BaseResponse verifyUser(SignInRequest request);
 }

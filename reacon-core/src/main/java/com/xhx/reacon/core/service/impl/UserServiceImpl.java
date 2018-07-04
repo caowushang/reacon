@@ -1,5 +1,7 @@
 package com.xhx.reacon.core.service.impl;
 
+import com.xhx.reacon.common.base.BaseResponse;
+import com.xhx.reacon.common.exception.BusinessException;
 import com.xhx.reacon.common.request.SignInRequest;
 import com.xhx.reacon.common.request.SignUpRequest;
 import com.xhx.reacon.common.request.QueryUserInfoRequest;
@@ -25,19 +27,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean addNewUser(SignUpRequest request) {
+    public BaseResponse addNewUser(SignUpRequest request) {
         User user = new User();
         user.setName(request.getName());
         user.setInfo(request.getInfo());
         user.setPassword(request.getPassword());
-        return userRepository.insert(user);
+        return BaseResponse.newSuccessResponse()
+                .result(userRepository.insert(user))
+                .build();
     }
 
     @Override
-    public Boolean verifyUser(SignInRequest request) {
+    public BaseResponse verifyUser(SignInRequest request) {
         List<User> users = userRepository.selectByName(request.getName());
         //todo
-        return !CollectionUtils.isEmpty(users)
+        Boolean done = !CollectionUtils.isEmpty(users)
                 && users.get(0).getPassword().equals(request.getPassword());
+
+        return BaseResponse.newSuccessResponse()
+                .result(done)
+                .build();
     }
 }
